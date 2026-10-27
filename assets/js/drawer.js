@@ -216,7 +216,7 @@
   }
 
   /* ------------------------------------------------------- delivery / pickup */
-  var PICKUP_ADDRESS = '611 E Carson St Ste B, Long Beach, CA 90807';
+  var PICKUP_ADDRESS = '4100 Atlantic Avenue, Long Beach, CA 90807';
   var coChoice = qsa('.co-choice__opt', coForm);
   var addrLabel = qs('[data-co-out-label="addr"]');
 
@@ -246,7 +246,7 @@
     var note = qs('[data-fulfil-note]');
     if (note) {
       note.textContent = pickup
-        ? 'Pick up from 611 E Carson St Ste B — Mon–Fri 9–5, Sat 9–3, closed Sunday. No delivery charge is added.'
+        ? 'Pick up from 4100 Atlantic Avenue — Mon–Fri 9–5, Sat 9–3, closed Sunday. No delivery charge is added.'
         : 'Same-day delivery is offered across Long Beach where the day allows, next day on the rest. We photograph the arrangement before it leaves the shop.';
     }
     coChoice.forEach(function (opt) {
