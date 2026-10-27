@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Catalogue — A Beautiful California Florist, Long Beach</title>
+<meta name="description" content="The catalogue of A Beautiful California Florist, Long Beach: twelve pieces at the shop's published prices, in Standard, Deluxe and Premium. Sample photography, demo storefront.">
+<meta name="theme-color" content="#14100E">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/home.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/catalogue.css">
+<link rel="stylesheet" href="assets/css/motion.css">
+<script>
+document.documentElement.classList.replace('no-js','js');
+window.addEventListener('error', function () { document.documentElement.classList.add('is-degraded'); });
+window.setTimeout(function () { if (!window.__bwReady) document.documentElement.classList.add('is-degraded'); }, 4000);
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head" data-head>
+  <div class="site-head__inner">
+    <a class="brand" href="index.html" aria-label="A Beautiful California Florist — home">
+      <span class="mark" aria-hidden="true">
+        <svg class="mark__hex" viewBox="0 0 100 116" focusable="false"><polygon points="50,2 97,29 97,87 50,114 3,87 3,29"/></svg>
+        <span class="mark__in">
+          <span class="mark__script">ABC</span>
+        </span>
+      </span>
+      <span class="brand__text">
+        <span class="brand__name">A Beautiful California Florist</span>
+        <span class="brand__phone">(562) 437-4106 · Long Beach</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <a href="#collection">Collection</a>
+      <a href="#collection" data-nav-occ="autumn">Autumn</a>
+      <a href="#collection" data-nav-occ="birthday">Birthday</a>
+      <a href="#collection" data-nav-occ="love and romance">Love &amp; Romance</a>
+      <a href="#collection" data-nav-occ="sympathy">Sympathy</a>
+      <a href="index.html#visit">Visit</a>
+      <a href="collection.html" aria-current="page">Catalogue</a>
+    </nav>
+
+    <div class="site-head__actions">
+      <span class="head-note">Same-day · Long Beach</span>
+      <button class="cart-btn" type="button" data-cart-open aria-haspopup="dialog" aria-controls="cart-drawer" aria-label="Open basket, 0 items">
+        <span class="cart-btn__label">Basket</span>
+        <span class="cart-btn__count" data-cart-count aria-hidden="true">0</span>
+      </button>
+      <button class="menu-btn" type="button" data-menu-open aria-expanded="false" aria-controls="mobile-menu">
+        <span class="menu-btn__bars" aria-hidden="true"><i></i><i></i></span>
+        <span>Menu</span>
+      </button>
+    </div>
+  </div>
+  <span class="site-head__rule" aria-hidden="true"></span>
+</header>
+
+<div class="mmenu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Site menu" data-menu inert>
+  <div class="mmenu__scrim" data-menu-close></div>
+  <div class="mmenu__panel" data-menu-panel>
+    <div class="mmenu__top">
+      <span class="eyebrow">A Beautiful California Florist</span>
+      <button class="icon-btn" type="button" data-menu-close aria-label="Close menu"><span aria-hidden="true">×</span></button>
+    </div>
+    <nav class="mmenu__nav" aria-label="Mobile">
+      <a href="#collection"><span>01</span>Collection</a>
+      <a href="#collection" data-nav-occ="autumn"><span>02</span>Autumn</a>
+      <a href="#collection" data-nav-occ="birthday"><span>03</span>Birthday</a>
+      <a href="#collection" data-nav-occ="love and romance"><span>04</span>Love &amp; Romance</a>
+      <a href="#collection" data-nav-occ="sympathy"><span>05</span>Sympathy and Funeral</a>
+      <a href="index.html#notes"><span>06</span>Kind words</a>
+      <a href="index.html#visit"><span>07</span>Visit</a>
+      <a href="collection.html" aria-current="page"><span>08</span>Catalogue</a>
+    </nav>
+    <div class="mmenu__foot">
+      <p class="eyebrow">The shop</p>
+      <p>611 E Carson St Ste B<br>Long Beach, CA 90807</p>
+      <p class="mmenu__hours">Mon–Fri 9–5 · Sat 9–3 · Sun closed</p>
+      <p class="mmenu__hours">(562) 437-4106</p>
+      <button class="btn btn--line" type="button" data-cart-open>Open basket</button>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+  <section class="cat-hero" aria-labelledby="cat-title">
+    <p class="eyebrow" data-reveal><span class="eyebrow__dash" aria-hidden="true"></span>The shop's catalogue · twelve pieces</p>
+    <h1 class="cat-hero__title type-lift" id="cat-title" data-reveal>The <em>catalogue</em></h1>
+    <p class="cat-hero__sub" data-reveal>A selection of the pieces A Beautiful California Florist lists online, at the
+      prices published there. Each comes in Standard, Deluxe or Premium. Filter by occasion, or open a
+      piece to read the shop's own description and see it in detail.</p>
+    <div class="cat-hero__meta">
+      <a class="link" href="index.html#edit"><span aria-hidden="true">←</span>Back to the autumn edit</a>
+      <p>Sample photography · demo storefront</p>
+    </div>
+  </section>
+
+  <section class="sec sec--collection" id="collection" aria-labelledby="collection-title">
+    <h2 class="u-sr" id="collection-title">Filter the catalogue by occasion</h2>
+
+    <div class="filters" role="group" aria-label="Filter arrangements by occasion">
+      <span class="filters__ind" data-chip-ind aria-hidden="true"></span>
+      <button class="chip is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+      <button class="chip" type="button" data-filter="autumn" aria-pressed="false">Autumn</button>
+      <button class="chip" type="button" data-filter="birthday" aria-pressed="false">Birthday</button>
+      <button class="chip" type="button" data-filter="love and romance" aria-pressed="false">Love &amp; Romance</button>
+      <button class="chip" type="button" data-filter="anniversary" aria-pressed="false">Anniversary</button>
+      <button class="chip" type="button" data-filter="thank you" aria-pressed="false">Thank You</button>
+      <button class="chip" type="button" data-filter="just because" aria-pressed="false">Just Because</button>
+      <button class="chip" type="button" data-filter="get well" aria-pressed="false">Get Well</button>
+      <button class="chip" type="button" data-filter="sympathy" aria-pressed="false">Sympathy and Funeral</button>
+      <p class="filters__count" aria-live="polite" data-grid-count>12 pieces</p>
+    </div>
+
+    <div class="grid" data-grid></div>
+
+    <p class="collection__note">Sample photography — client originals pending. Prices are the shop's
+      published prices; the Standard / Deluxe / Premium upcharges are sample values. Checkout is
+      simulated for this demonstration: the order confirmed screen shows a demo order number only,
+      no payment is taken and nothing is sent.</p>
+  </section>
+
+  <section class="sizes-guide" aria-labelledby="sizes-title" data-cascade data-cascade-step="90">
+    <h2 class="u-sr" id="sizes-title">Sizes</h2>
+    <div class="sizes-guide__item" data-reveal>
+      <p class="sizes-guide__n">01</p>
+      <p class="sizes-guide__h">Standard</p>
+      <p class="sizes-guide__p">The piece as photographed and as published. The base price shown on
+        every card is this size.</p>
+    </div>
+    <div class="sizes-guide__item" data-reveal>
+      <p class="sizes-guide__n">02</p>
+      <p class="sizes-guide__h">Deluxe</p>
+      <p class="sizes-guide__p">More stems in the same palette. The upcharge in this demo is a sample
+        figure the shop still has to confirm.</p>
+    </div>
+    <div class="sizes-guide__item" data-reveal>
+      <p class="sizes-guide__n">03</p>
+      <p class="sizes-guide__h">Premium</p>
+      <p class="sizes-guide__p">The fullest version sent — for a table, an entrance or a room that
+        needs filling. Sample upcharge, as above.</p>
+    </div>
+  </section>
+
+  <div class="cat-foot">
+    <p>Products, prices and descriptions from abeautifulcalflorist.com. Checkout in this demo is
+      simulated and takes no payment.</p>
+    <a class="btn btn--line" href="index.html">Back to the shop<span class="btn__arrow" aria-hidden="true">→</span></a>
+  </div>
+</main>
+
+<!-- CART DRAWER -->
+<div class="scrim" data-scrim hidden></div>
+
+<aside class="drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title" data-drawer data-cart-drawer inert>
+  <div class="drawer__head">
+    <h2 class="drawer__title" id="cart-title">Basket <span class="drawer__n" data-cart-count>0</span></h2>
+    <button class="icon-btn" type="button" data-drawer-close aria-label="Close basket"><span aria-hidden="true">×</span></button>
+  </div>
+
+  <div class="drawer__body" data-drawer-body>
+    <div class="drawer__empty" data-cart-empty>
+      <p class="drawer__empty-mark" aria-hidden="true">✳</p>
+      <p class="drawer__empty-t">Your basket is empty.</p>
+      <p class="drawer__empty-s">Start with the autumn edit, or the full catalogue.</p>
+      <a class="btn btn--line" href="#collection" data-drawer-close>Browse the collection</a>
+    </div>
+    <ul class="lines" data-cart-lines aria-label="Items in basket"></ul>
+  </div>
+
+  <div class="drawer__foot" data-cart-foot hidden>
+    <div class="gift">
+      <label class="gift__label" for="gift-msg">Gift message <span class="gift__opt">optional</span></label>
+      <textarea id="gift-msg" data-gift maxlength="240" rows="3" placeholder="Written by hand on our card." aria-describedby="gift-count"></textarea>
+      <p class="gift__count" id="gift-count"><span data-gift-count>0</span>/240 · saved with this order</p>
+    </div>
+    <div class="drawer__sum">
+      <span>Subtotal</span>
+      <span data-cart-subtotal>$0.00</span>
+    </div>
+    <p class="drawer__note">Delivery calculated at checkout · sample delivery figure</p>
+    <button class="btn btn--accent btn--wide" type="button" data-checkout-open data-checkout-start>Checkout<span class="btn__arrow" aria-hidden="true">→</span></button>
+    <p class="drawer__demo">Demo only — no payment will be taken.</p>
+  </div>
+</aside>
+
+<!-- PRODUCT MODAL -->
+<div class="modal" id="product-modal" role="dialog" aria-modal="true" aria-labelledby="pm-title" data-modal data-product-modal inert>
+  <div class="modal__scrim" data-modal-close></div>
+  <div class="modal__panel">
+    <button class="modal__x icon-btn" type="button" data-modal-close aria-label="Close product detail"><span aria-hidden="true">×</span></button>
+
+    <div class="pm">
+      <div class="pm__gallery">
+        <div class="pm__stage" data-stage tabindex="0" role="img" aria-label="Product photograph. Scroll or press plus to zoom, drag to pan.">
+          <img data-pm-img src="assets/img/resp/terracotta-bouquet-kraft-1600.jpg" alt="" width="1200" height="1600">
+          <span class="pm__zoomtag" data-pm-zoomtag>1.0×</span>
+        </div>
+        <div class="pm__thumbs" data-pm-thumbs role="group" aria-label="Choose product photograph"></div>
+        <div class="pm__zoomui">
+          <button class="icon-btn icon-btn--sm" type="button" data-zoom-out aria-label="Zoom out">−</button>
+          <button class="icon-btn icon-btn--sm" type="button" data-zoom-reset aria-label="Reset zoom"><span aria-hidden="true">↺</span></button>
+          <button class="icon-btn icon-btn--sm" type="button" data-zoom-in data-zoom-toggle aria-label="Zoom in">+</button>
+          <span class="pm__hint">scroll to zoom · drag to pan</span>
+        </div>
+      </div>
+
+      <div class="pm__info">
+        <p class="eyebrow" data-pm-no>Nº 01</p>
+        <h2 class="pm__title" id="pm-title" data-pm-title>—</h2>
+        <div class="pm__sub">
+          <p class="pm__price"><span data-pm-price>$0.00</span><small>USD</small></p>
+          <p class="pm__occ" data-pm-occ></p>
+        </div>
+        <p class="pm__blurb" data-pm-blurb></p>
+
+        <fieldset class="pm__sizes">
+          <legend class="eyebrow">Size</legend>
+          <div class="sizes" data-pm-sizes></div>
+        </fieldset>
+
+        <button class="btn btn--accent btn--wide pm__add" type="button" data-pm-add data-add-to-cart>
+          Add to basket — <span data-pm-add-price>$0.00</span>
+        </button>
+
+        <ul class="pm__facts">
+          <li><span>Size</span><span data-pm-stems>—</span></li>
+          <li><span>Palette</span><span data-pm-palette>—</span></li>
+          <li><span>Delivery</span><span>Same-day in Long Beach</span></li>
+          <li><span>Sizes</span><span>Standard / Deluxe / Premium</span></li>
+        </ul>
+        <p class="pm__demo">Sample photography and sample size pricing · demo checkout, no payment taken.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT -->
+<section class="checkout" id="checkout" role="dialog" aria-modal="true" aria-labelledby="co-title" data-checkout inert>
+  <div class="checkout__scrim" data-checkout-close></div>
+  <div class="checkout__panel">
+    <div class="checkout__head">
+      <div>
+        <p class="eyebrow">A Beautiful California Florist</p>
+        <h2 class="checkout__title" id="co-title" data-co-title>Checkout</h2>
+      </div>
+      <button class="icon-btn" type="button" data-checkout-close aria-label="Close checkout"><span aria-hidden="true">×</span></button>
+    </div>
+
+    <div class="checkout__demo" role="note">
+      <strong>Demo only</strong> — no payment will be taken, no order is placed, and nothing leaves this page.
+    </div>
+
+    <ol class="co-steps" data-co-steps aria-label="Checkout progress">
+      <li class="is-current" data-step-tab="1"><span>01</span>Details</li>
+      <li data-step-tab="2"><span>02</span>Delivery</li>
+      <li data-step-tab="3"><span>03</span>Review</li>
+    </ol>
+
+    <form class="co-form" data-co-form novalidate>
+      <!-- STEP 1 -->
+      <fieldset class="co-pane is-active" data-step="1">
+        <legend class="u-sr">Your details</legend>
+        <div class="co-grid">
+          <div class="field">
+            <label for="co-name">Full name</label>
+            <input id="co-name" name="name" type="text" autocomplete="name" required>
+            <p class="field__err" data-err-for="co-name" hidden>Please tell us who to address this to.</p>
+          </div>
+          <div class="field">
+            <label for="co-email">Email</label>
+            <input id="co-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+            <p class="field__err" data-err-for="co-email" hidden>Enter a valid email address.</p>
+          </div>
+          <div class="field field--full">
+            <label for="co-phone">Phone <span class="field__opt">for delivery only</span></label>
+            <input id="co-phone" name="phone" type="tel" autocomplete="tel" placeholder="(562) 555 0142">
+            <p class="field__err" data-err-for="co-phone" hidden>Use at least 7 digits.</p>
+          </div>
+        </div>
+        <p class="co-hint">We photograph the arrangement and email it to you before the driver leaves. No accounts, no passwords.</p>
+      </fieldset>
+
+      <!-- STEP 2 -->
+      <fieldset class="co-pane" data-step="2" hidden>
+        <legend class="u-sr">Delivery or pickup</legend>
+
+        <div class="co-choice" role="radiogroup" aria-label="Deliver the arrangement or collect it in the shop">
+          <label class="co-choice__opt">
+            <input type="radio" name="delivery-option" value="delivery" checked>
+            <span class="co-choice__body">
+              <span class="co-choice__t">Deliver it</span>
+              <span class="co-choice__s">Hand-delivered across Long Beach by our own driver. A sample delivery figure is added to the total.</span>
+            </span>
+          </label>
+          <label class="co-choice__opt">
+            <input type="radio" name="delivery-option" value="pickup">
+            <span class="co-choice__body">
+              <span class="co-choice__t">Pickup at the shop</span>
+              <span class="co-choice__s">Pick up in person at 611 E Carson St Ste B, Long Beach · Mon–Fri 9–5, Sat 9–3, Sun closed. No delivery charge.</span>
+            </span>
+          </label>
+        </div>
+
+        <div class="co-grid">
+          <div class="field field--full" data-delivery-only>
+            <label for="co-addr">Street address</label>
+            <input id="co-addr" name="address" type="text" autocomplete="street-address" required>
+            <p class="field__err" data-err-for="co-addr" hidden>Add a street address, or choose collection in the shop.</p>
+          </div>
+          <div class="field" data-delivery-only>
+            <label for="co-city">City</label>
+            <input id="co-city" name="city" type="text" autocomplete="address-level2" value="Long Beach" required>
+            <p class="field__err" data-err-for="co-city" hidden>Add a city.</p>
+          </div>
+          <div class="field" data-delivery-only>
+            <label for="co-zip">ZIP</label>
+            <input id="co-zip" name="zip" type="text" inputmode="numeric" autocomplete="postal-code" required>
+            <p class="field__err" data-err-for="co-zip" hidden>Enter a 5-digit ZIP.</p>
+          </div>
+          <div class="field">
+            <label for="co-date" data-date-label>Requested delivery date</label>
+            <input id="co-date" name="date" type="date" required>
+            <p class="field__err" data-err-for="co-date" hidden>Choose a date from tomorrow onward.</p>
+          </div>
+          <div class="field">
+            <label for="co-window" data-window-label>Time window</label>
+            <select id="co-window" name="window">
+              <option>Morning · 9–12</option>
+              <option selected>Afternoon · 12–5</option>
+              <option>By arrangement · call us</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label for="co-recip">Recipient name <span class="field__opt">if different</span></label>
+            <input id="co-recip" name="recipient" type="text" placeholder="Who should we ask for?">
+          </div>
+        </div>
+        <p class="co-hint" data-fulfil-note>Same-day delivery is offered across Long Beach where the day allows, next day on the rest. We photograph the arrangement before it leaves the shop.</p>
+      </fieldset>
+
+      <!-- STEP 3 -->
+      <fieldset class="co-pane" data-step="3" hidden>
+        <legend class="u-sr">Review</legend>
+        <div class="co-review">
+          <ul class="co-review__lines" data-co-lines></ul>
+          <dl class="co-review__meta">
+            <div><dt>Recipient</dt><dd data-co-out="name">—</dd></div>
+            <div><dt>How</dt><dd data-co-out="fulfil">—</dd></div>
+            <div><dt data-co-out-label="addr">Deliver to</dt><dd data-co-out="addr">—</dd></div>
+            <div><dt>When</dt><dd data-co-out="when">—</dd></div>
+            <div><dt>Gift message</dt><dd data-co-out="gift">—</dd></div>
+          </dl>
+          <dl class="co-totals">
+            <div><dt>Subtotal</dt><dd data-co-subtotal>$0.00</dd></div>
+            <div><dt>Delivery</dt><dd data-co-delivery>$0.00</dd></div>
+            <div class="co-totals__grand"><dt>Total</dt><dd data-co-total>$0.00</dd></div>
+          </dl>
+        </div>
+        <div class="co-fineprint">
+          <p>Prices are the shop's published prices; size upcharges and the delivery figure are sample
+            values. Payment is not requested and no card details are collected anywhere in this demo.</p>
+        </div>
+      </fieldset>
+
+      <!-- SUCCESS -->
+      <div class="co-done" data-co-done hidden>
+        <p class="co-done__mark" aria-hidden="true">✳</p>
+        <p class="co-done__kicker">Demo order · no payment taken</p>
+        <h3 class="co-done__h" data-co-done-h>Order confirmed</h3>
+        <p class="co-done__ref">Order number <strong data-co-ref>ABC-0000</strong></p>
+        <div class="co-done__demo" role="note">
+          <strong>This is a demonstration.</strong> Nothing was ordered, nothing was charged and no
+          driver is on the way. The basket has been emptied so you can walk the flow again.
+        </div>
+        <dl class="co-done__sum" data-co-done-summary></dl>
+        <div class="co-done__actions">
+          <button class="btn btn--cream" type="button" data-continue>
+            Continue shopping<span class="btn__arrow" aria-hidden="true">→</span>
+          </button>
+          <a class="btn btn--ghost" href="index.html#collection">Back to the collection</a>
+        </div>
+      </div>
+
+      <div class="co-nav" data-co-nav>
+        <button class="btn btn--ghost" type="button" data-co-back hidden>Back</button>
+        <button class="btn btn--accent" type="submit" data-co-next>Continue<span class="btn__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<p class="u-sr" role="status" aria-live="polite" data-live></p>
+
+<noscript>
+  <div class="noscript">This storefront demo needs JavaScript for the product catalogue, basket and checkout.</div>
+</noscript>
+
+<script src="assets/data/client-catalogue.js" defer></script>
+<script src="assets/vendor/motion.min.js" defer></script>
+<script src="assets/vendor/embla.umd.js" defer></script>
+<script src="assets/js/abc-motion.js" defer></script>
+<script src="assets/js/data.js" defer></script>
+<script src="assets/js/ui.js" defer></script>
+<script src="assets/js/cart.js" defer></script>
+<script src="assets/js/drawer.js" defer></script>
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

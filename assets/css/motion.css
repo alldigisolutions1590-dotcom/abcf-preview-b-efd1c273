@@ -1,0 +1,385 @@
+/* ==========================================================================
+   A Beautiful California Florist — motion.css  (Concept B, cinematic)
+   --------------------------------------------------------------------------
+   The visual half of the shared motion layer. assets/js/abc-motion.js owns the
+   logic (reveals, parallax, hero arming, marquee cloning); this file owns the
+   easing, the choreography and the interaction states.
+
+   Rules kept here on purpose:
+   * transform + opacity are the only animated properties, with one deliberate
+     exception — a 0.01em letter-spacing settle on display headings, which the
+     brief asks for ("slight tracking"). It is short, it happens once, and it
+     never runs on scroll.
+   * no scroll listeners of any kind. Parallax comes from the shared module.
+   * everything degrades under prefers-reduced-motion: no transforms, nothing
+     left hidden.
+   ========================================================================== */
+
+:root{
+  --m-ease:cubic-bezier(.16,1,.3,1);
+  --m-ease-io:cubic-bezier(.5,.05,.2,1);
+  --m-step:90ms;
+  --m-lift:28px;
+  /* No sepia anywhere and no brightness lift: the photographs are already warm
+     and vivid, and the grade was what made the flowers read brown. */
+  --grade-hero:saturate(1.11) contrast(1.05);
+  --grade-band:saturate(1.06) contrast(1.04);
+}
+
+/* ==========================================================================
+   1. GRADE — the veil is gone, the photograph carries the colour
+   --------------------------------------------------------------------------
+   What was there before: a vertical espresso scrim at 0.90 / 0.12 / 0.17 / 0.94,
+   a horizontal one at 0.90 / 0.34 / 0 / 0.20, a 0.60 radial over the left half,
+   a 0.09 grain and a 0.08 sepia on the band. Flower colour read brown and the
+   petals had no life in them.
+   What is there now: the top stop is 0.58 (was 0.90), the mid-band is 0.05–0.14
+   (was 0.12–0.17), the left shoulder is 0.40 (was 0.90), the radial wall is
+   gone, the grain is 0.05 and the sepia is 0 on both the hero and the band.
+   What that costs: the display type now sits over bright petals. It is paid for
+   locally, not globally — .hero__head::before draws a feathered pool of shade
+   that follows the headline only, so the rest of the frame keeps its colour
+   (see §3).
+   ========================================================================== */
+.hero__img{filter:var(--grade-hero)}
+.hero__scrim{
+  background:
+    /* top: the header sits over it; the eyebrow gets a little shade */
+    linear-gradient(180deg,
+      rgba(18,15,14,.58) 0%,
+      rgba(18,15,14,.10) 22%,
+      rgba(18,15,14,.05) 42%,
+      rgba(18,15,14,.18) 64%,
+      rgba(20,16,14,.58) 86%,
+      rgba(20,16,14,.74) 100%),
+    /* a light shoulder on the left only — not a 0.90 wall */
+    linear-gradient(96deg,
+      rgba(16,14,13,.38) 0%,
+      rgba(16,14,13,.12) 30%,
+      rgba(16,14,13,0) 56%,
+      rgba(16,14,13,.10) 100%);
+}
+.hero__grain{opacity:.05}
+.band__media img{filter:var(--grade-band)}
+.card__img{filter:saturate(1.03) brightness(1)}
+.card:hover .card__img{filter:saturate(1.1) brightness(1.03)}
+.railcard__img{filter:saturate(1.04) contrast(1.02)}
+.note img{filter:saturate(1.05) contrast(1.02)}
+.atelier__media img{filter:saturate(1.04) contrast(1.02)}
+
+/* ==========================================================================
+   2. REVEALS — the shared module adds .is-inview
+   ========================================================================== */
+.js [data-reveal]{
+  opacity:0; transform:translate3d(0,var(--m-lift),0);
+  transition:opacity .8s var(--m-ease) var(--reveal-delay,0ms),
+             transform .95s var(--m-ease) var(--reveal-delay,0ms);
+  will-change:transform,opacity;
+}
+.js [data-reveal].is-inview,
+.js [data-reveal].is-in{opacity:1; transform:none}
+
+/* display type settles its tracking as it arrives — reaches full opacity while
+   the line is still below the optical centre */
+.js .type-lift{
+  opacity:0; transform:translate3d(0,34px,0); letter-spacing:-.052em;
+  transition:opacity .75s var(--m-ease) var(--reveal-delay,0ms),
+             transform 1s var(--m-ease) var(--reveal-delay,0ms),
+             letter-spacing 1.15s var(--m-ease) var(--reveal-delay,0ms);
+}
+.js .type-lift.is-inview,
+.js .type-lift.is-in{opacity:1; transform:none; letter-spacing:-.035em}
+/* shorter headings keep their own tighter tracking */
+.js .h2h.type-lift.is-inview,.js .h2h.type-lift.is-in{letter-spacing:-.03em}
+
+/* eyebrow micro-labels open their tracking instead of moving far */
+.js .eyebrow[data-reveal]{transform:none; letter-spacing:.18em}
+.js .eyebrow[data-reveal].is-inview,
+.js .eyebrow[data-reveal].is-in{letter-spacing:.24em}
+
+/* cascade containers: the module sets --reveal-delay per child */
+.js [data-cascade] [data-reveal]{transition-delay:var(--reveal-delay,0ms)}
+
+/* ==========================================================================
+   3. HERO — three layers at three speeds
+   --------------------------------------------------------------------------
+   plate   0.22  (background photograph, slowest)
+   head   -0.05  (typography, drifts against the plate)
+   inset  -0.16  (foreground florals, fastest — it is in front)
+   plus a 1.9 s scale on load. Depth is the difference between the speeds.
+   ========================================================================== */
+.hero__plate{position:absolute; inset:-8% 0; overflow:hidden}
+.hero__plate-in{position:absolute; inset:0}
+.hero__head{will-change:transform; position:relative}
+.hero__inset{z-index:4}
+
+/* A local pool of shade behind the headline — the device the band already uses,
+   now doing the work the global scrim used to do. It is feathered on all four
+   sides (gradient + mask), sits behind the type only, and fades out before the
+   right-hand two-fifths of the frame, so the flowers there stay vivid while the
+   headline keeps its measured contrast. See docs/CHANGE-SUMMARY-B.md §1 for the
+   before/after numbers. */
+.hero__head::before{
+  content:''; position:absolute; z-index:-1; pointer-events:none;
+  inset:-24% -8% -26% -14%;
+  /* The horizontal fall-off lives in the background, the vertical fall-off in
+     the mask: both reach zero inside the box, so all four edges are fades and
+     no rectangle can show. */
+  /* The plateau stops at the end of the type (~66% of the box = x 900). Past
+     that the pool is gone, so the right half of the bouquet keeps every bit of
+     its colour — a pool that reached the flowers would only fog them. */
+  background:
+    linear-gradient(92deg,
+      rgba(9,7,6,.76) 0%,
+      rgba(9,7,6,.74) 16%,
+      rgba(9,7,6,.70) 44%,
+      rgba(9,7,6,.54) 56%,
+      rgba(9,7,6,.22) 64%,
+      rgba(9,7,6,0) 71%),
+    radial-gradient(46% 58% at 2% 52%, rgba(9,7,6,.30) 0%, rgba(9,7,6,0) 100%);
+  -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,0) 0%, #000 19%, #000 80%, rgba(0,0,0,0) 100%);
+  mask-image:linear-gradient(180deg, rgba(0,0,0,0) 0%, #000 19%, #000 80%, rgba(0,0,0,0) 100%);
+}
+.hero__title{text-shadow:0 2px 22px rgba(10,8,7,.42), 0 1px 3px rgba(10,8,7,.30)}
+.hero .eyebrow--light{color:rgba(243,237,228,.88); text-shadow:0 1px 12px rgba(10,8,7,.75)}
+
+/* slow scale on load — the plate settles, it never pans flat */
+.js .hero__img{transform:scale(1.14); transition:transform 1.9s var(--m-ease)}
+.js .hero.is-loaded .hero__img{transform:scale(1.025)}
+
+/* type entry, ordered by --item-index from the shared module */
+.js .hero [data-hero-item]{opacity:0}
+.js .hero [data-hero-item]{transform:translate3d(0,22px,0)}
+.js .hero.is-loaded [data-hero-item]{
+  opacity:1; transform:none;
+  transition:opacity .85s var(--m-ease) calc(var(--item-index,0) * 90ms + 140ms),
+             transform 1.05s var(--m-ease) calc(var(--item-index,0) * 90ms + 140ms),
+             letter-spacing 1.1s var(--m-ease) calc(var(--item-index,0) * 90ms + 140ms);
+}
+.js .hero .mask__in{transition:transform 1.15s var(--m-ease) calc(var(--item-index,0) * 100ms + 120ms)}
+.js .hero.is-loaded .mask__in{transform:translateY(0)}
+
+/* the hero eyebrow opens up as it lands */
+.js .hero .eyebrow[data-hero-item]{letter-spacing:.18em}
+.js .hero.is-loaded .eyebrow[data-hero-item]{letter-spacing:.24em}
+
+/* the inset is the foreground floral layer — it lands from slightly closer */
+.js .hero [data-hero-inset]{
+  opacity:0; transform:translate3d(0,26px,0) scale(.96);
+  transition:opacity 1s var(--m-ease) .5s, transform 1.25s var(--m-ease) .5s;
+}
+.js .hero.is-loaded [data-hero-inset]{opacity:1; transform:none}
+
+/* ------------------------------------------------ ticker (marquee clone) */
+/* the track holds one set in markup; abc-motion.js appends the clone and adds
+   .is-marquee-ready, so a failed clone leaves a readable static strip */
+.ticker__track{animation:none}
+.ticker.is-marquee-ready .ticker__track{
+  animation:ticker-loop var(--ticker-speed, 52s) linear infinite; will-change:transform;
+}
+@keyframes ticker-loop{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+.ticker:hover .ticker__track,.ticker:focus-within .ticker__track{animation-play-state:paused}
+
+/* ==========================================================================
+   4. BAND / ATELIER / NOTES — layered reveals
+   ========================================================================== */
+.band__media{will-change:transform}
+.band__media-in{position:absolute; inset:0}
+.band__inner [data-reveal]{--m-lift:22px}
+.band__title[data-reveal]{opacity:0}
+.band__title[data-reveal].is-inview{opacity:1}
+
+/* photographs drift a little against their captions */
+.atelier__media img,.note img{will-change:transform}
+.atelier__media{overflow:hidden}
+.atelier__media img,.note img{transition:transform 1.4s var(--m-ease), filter .8s var(--m-ease)}
+.atelier__media:hover img,.note:hover img{transform:scale(1.035)}
+
+/* ==========================================================================
+   5. RAIL / CAROUSEL AFFORDANCE
+   ========================================================================== */
+.rail:focus-visible{outline:1px solid var(--accent-hi); outline-offset:12px}
+.embla{-webkit-user-select:none; user-select:none}
+.embla__container{will-change:transform}
+.embla::after{
+  content:''; position:absolute; inset:0 0 0 auto; width:clamp(30px,5vw,84px);
+  pointer-events:none; opacity:1; transition:opacity .4s var(--m-ease);
+  background:linear-gradient(270deg, rgba(20,16,14,.92), rgba(20,16,14,0));
+}
+.rail.is-end .embla::after{opacity:0}
+.embla{position:relative}
+.rail.is-dragging .embla__slide{transition:none}
+
+.rail__prog span{
+  width:100%; background:linear-gradient(90deg, var(--accent), var(--gold));
+  transform-origin:0 50%; transform:scaleX(var(--rail-progress,.2));
+  transition:transform .3s linear; inset:0 0 0 0;
+}
+.rail__prog{overflow:hidden}
+.rail__keys{
+  font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--cream-40);
+  opacity:0; transition:opacity .3s var(--m-ease); margin-left:auto; padding-right:14px;
+}
+.rail__foot:focus-within .rail__keys,.rail:focus-visible ~ .rail__foot .rail__keys{opacity:1}
+
+/* ==========================================================================
+   6. OCCASION CHIPS — a travelling indicator
+   ========================================================================== */
+.filters{position:relative; padding-bottom:7px}
+/* one hairline that travels between chips. Its box is set instantly, then a
+   transform maps it back to the previous chip and releases — FLIP, so only
+   transform/opacity ever animate. */
+.filters__ind{
+  position:absolute; top:0; left:0; width:0; height:2px; z-index:0; pointer-events:none;
+  background:linear-gradient(90deg, rgba(224,189,125,0), var(--gold) 18%, var(--gold) 82%, rgba(224,189,125,0));
+  opacity:0; transform-origin:0 50%;
+  transition:transform .5s var(--m-ease), opacity .25s var(--m-ease);
+}
+.filters__ind.is-on{opacity:1}
+.chip{position:relative; z-index:1}
+.chip.is-active{transition:color .35s var(--m-ease), border-color .35s var(--m-ease), background .35s var(--m-ease)}
+
+/* the grid swaps with a short, calm transition rather than a jump */
+.grid.is-filtering,.card.is-entering{will-change:transform,opacity}
+
+/* ==========================================================================
+   7. IMAGE EXPANSION — scales from the thumbnail
+   ========================================================================== */
+.note,.atelier__media{position:relative}
+.note img,.atelier__media img{cursor:zoom-in}
+.zoomcue{
+  position:absolute; right:9px; bottom:9px; z-index:3;
+  display:inline-flex; align-items:center; gap:7px;
+  padding:7px 10px; border:1px solid rgba(243,237,228,.3);
+  background:rgba(20,16,14,.74); color:var(--cream);
+  font-size:8.5px; letter-spacing:.18em; text-transform:uppercase; line-height:1;
+  opacity:0; transform:translate3d(0,6px,0);
+  transition:opacity .35s var(--m-ease), transform .35s var(--m-ease), background .3s;
+}
+.note:hover .zoomcue,.atelier__media:hover .zoomcue,.zoomcue:focus-visible{
+  opacity:1; transform:none;
+}
+.zoomcue:hover{background:var(--accent); border-color:var(--accent); color:#1A120E}
+.zoomcue b{font-weight:500; font-size:11px; line-height:1}
+
+.lightbox{
+  position:fixed; inset:0; z-index:118; display:flex; align-items:center; justify-content:center;
+  padding:clamp(10px,3vw,44px); visibility:hidden;
+}
+.lightbox{transition:visibility 0s linear .55s}
+.lightbox.is-open{visibility:visible; transition-delay:0s}
+.lightbox__scrim{
+  position:absolute; inset:0; background:rgba(8,6,5,.93);
+  -webkit-backdrop-filter:blur(5px); backdrop-filter:blur(5px);
+  opacity:0; transition:opacity .5s var(--m-ease);
+}
+.lightbox.is-open .lightbox__scrim{opacity:1}
+.lightbox__panel{
+  position:relative; display:flex; flex-direction:column; gap:10px;
+  max-width:min(1120px,100%); max-height:100%;
+}
+.lightbox__img{
+  display:block; max-width:100%; max-height:calc(100svh - clamp(90px,14vh,150px));
+  width:auto; height:auto; object-fit:contain;
+  box-shadow:0 40px 120px rgba(0,0,0,.66); background:#100C0A;
+}
+.lightbox__bar{
+  display:flex; align-items:center; justify-content:space-between; gap:14px;
+  font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--cream-55);
+}
+.lightbox__cap span{color:var(--gold)}
+.lightbox__nav{display:flex; gap:6px}
+.lightbox__x{
+  position:fixed; top:16px; right:16px; z-index:3;
+  width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid rgba(243,237,228,.34); background:rgba(20,16,14,.7); color:var(--cream);
+  font-size:16px; line-height:1;
+}
+.lightbox__x:hover{background:var(--cream); color:var(--ground)}
+.lightbox__arrow{
+  position:absolute; top:50%; z-index:2; margin-top:-22px;
+  width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center;
+  border:1px solid rgba(243,237,228,.28); background:rgba(20,16,14,.66); color:var(--cream);
+  font-size:15px;
+}
+.lightbox__arrow:hover{background:var(--cream); color:var(--ground)}
+.lightbox__arrow--prev{left:0}
+.lightbox__arrow--next{right:0}
+@media (min-width:1100px){
+  .lightbox__arrow--prev{left:-56px}
+  .lightbox__arrow--next{right:-56px}
+}
+.lightbox__count{font-variant-numeric:tabular-nums}
+
+/* ==========================================================================
+   8. CART DRAWER — staged content
+   ========================================================================== */
+.drawer__head,.drawer__foot,.drawer__body > *{will-change:transform,opacity}
+.js .drawer .drawer__head{opacity:0; transform:translate3d(14px,0,0); transition:opacity .4s var(--m-ease), transform .5s var(--m-ease)}
+.js .drawer.is-open .drawer__head{opacity:1; transform:none; transition-delay:.12s}
+.js .drawer .lines .line{opacity:0; transform:translate3d(0,14px,0); transition:opacity .45s var(--m-ease), transform .55s var(--m-ease)}
+.js .drawer.is-open .lines .line{opacity:1; transform:none}
+.js .drawer.is-open .lines .line:nth-child(1){transition-delay:.2s}
+.js .drawer.is-open .lines .line:nth-child(2){transition-delay:.26s}
+.js .drawer.is-open .lines .line:nth-child(3){transition-delay:.32s}
+.js .drawer.is-open .lines .line:nth-child(n+4){transition-delay:.38s}
+.js .drawer .drawer__empty{opacity:0; transform:translate3d(0,12px,0); transition:opacity .45s var(--m-ease), transform .55s var(--m-ease)}
+.js .drawer.is-open .drawer__empty{opacity:1; transform:none; transition-delay:.18s}
+.js .drawer .drawer__foot{opacity:0; transform:translate3d(0,18px,0); transition:opacity .5s var(--m-ease), transform .65s var(--m-ease)}
+.js .drawer.is-open .drawer__foot{opacity:1; transform:none; transition-delay:.24s}
+/* the drawer itself opens a touch slower than a plain slide, with a settle */
+.drawer{transition:transform .72s var(--m-ease)}
+.scrim.is-on{-webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px)}
+
+/* ==========================================================================
+   9. MOBILE — shorter, simpler, flowers early
+   ========================================================================== */
+@media (max-width:900px){
+  :root{--m-lift:20px}
+  .js .hero__img{transform:scale(1.07); transition:transform 1.1s var(--m-ease)}
+  .js .hero.is-loaded .hero__img{transform:scale(1.01)}
+  .js .hero [data-hero-item]{
+    transition:opacity .36s var(--m-ease) calc(var(--item-index,0) * 45ms + 60ms),
+               transform .42s var(--m-ease) calc(var(--item-index,0) * 45ms + 60ms),
+               letter-spacing .5s var(--m-ease) calc(var(--item-index,0) * 45ms + 60ms);
+  }
+  .js .hero .mask__in{transition:transform .5s var(--m-ease) calc(var(--item-index,0) * 50ms + 40ms)}
+  .js .hero [data-hero-inset]{transition-duration:.5s}
+  .js [data-reveal]{
+    transition:opacity .42s var(--m-ease) var(--reveal-delay,0ms),
+               transform .5s var(--m-ease) var(--reveal-delay,0ms);
+  }
+  .js .type-lift{transition-duration:.45s,.55s,.6s}
+  .hero__plate{inset:-5% 0}
+  /* no blur-heavy overlays on a phone */
+  .modal__scrim,.checkout__scrim,.lightbox__scrim{-webkit-backdrop-filter:none; backdrop-filter:none}
+  .scrim.is-on,.site-head.is-stuck{-webkit-backdrop-filter:none; backdrop-filter:none}
+  .zoomcue{opacity:1; transform:none}
+  .lightbox__panel{max-width:100%}
+  .lightbox__img{max-height:calc(100svh - 116px)}
+  .lightbox__arrow{width:38px; height:38px}
+  .lightbox__x{top:-40px; right:0}
+  .rail__keys{display:none}
+}
+
+/* ==========================================================================
+   10. REDUCED MOTION — everything visible, nothing moves
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce){
+  .js [data-reveal],.js [data-reveal].is-in,.js .type-lift,
+  .js .hero [data-hero-item],.js .hero [data-hero-inset],
+  .js .drawer .drawer__head,.js .drawer .lines .line,
+  .js .drawer .drawer__empty,.js .drawer .drawer__foot{
+    opacity:1!important; transform:none!important; transition:none!important;
+    letter-spacing:normal;
+  }
+  .js .hero__img{transform:none!important}
+  .js .hero .mask__in{transform:none!important}
+  .filters__ind{transition:none!important}
+  .rail__prog span{transition:none!important}
+  .ticker__track{animation:none!important}
+  .zoomcue{opacity:1; transform:none}
+}
